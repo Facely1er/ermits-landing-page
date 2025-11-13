@@ -467,22 +467,36 @@
 
     <script>
       // Theme Toggle - Initialize immediately since script is at end of body
-      (function() {
+      (function initThemeToggle() {
+        // Wait for DOM to be fully ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initThemeToggle);
+          return;
+        }
+
         const body = document.getElementById('body');
         const themeToggle = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
 
-        if (!body || !themeToggle || !themeIcon) {
+        // Verify all required elements exist
+        if (!body) {
+          console.error('Theme toggle: body element not found');
+          return;
+        }
+        if (!themeToggle) {
+          console.error('Theme toggle: button element not found');
+          return;
+        }
+        if (!themeIcon) {
+          console.error('Theme toggle: icon element not found');
           return;
         }
 
         function updateThemeIcon(theme) {
           if (!themeIcon) return;
-          if (theme === 'light') {
-            themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
-          } else {
-            themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
-          }
+          const sunIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+          const moonIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+          themeIcon.innerHTML = theme === 'light' ? sunIcon : moonIcon;
         }
 
         // Get saved theme or default to dark
@@ -490,15 +504,23 @@
         if (currentTheme === 'light') {
           body.classList.add('light');
           updateThemeIcon('light');
+        } else {
+          updateThemeIcon('dark');
         }
 
-        // Add click event listener
-        themeToggle.addEventListener('click', function() {
+        // Add click event listener to toggle theme
+        themeToggle.addEventListener('click', function handleThemeToggle() {
           body.classList.toggle('light');
           const isLight = body.classList.contains('light');
-          localStorage.setItem('theme', isLight ? 'light' : 'dark');
-          updateThemeIcon(isLight ? 'light' : 'dark');
+          const newTheme = isLight ? 'light' : 'dark';
+          localStorage.setItem('theme', newTheme);
+          updateThemeIcon(newTheme);
         });
+
+        // Verify event listener was attached
+        if (themeToggle.onclick === null && !themeToggle.getAttribute('data-listener-attached')) {
+          themeToggle.setAttribute('data-listener-attached', 'true');
+        }
       })();
 
       // Year
