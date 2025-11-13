@@ -466,14 +466,14 @@
     </div>
 
     <script>
-      // Theme Toggle - Wait for DOM to be ready
-      document.addEventListener('DOMContentLoaded', function() {
+      // Theme Toggle - Initialize immediately since script is at end of body
+      (function() {
         const body = document.getElementById('body');
         const themeToggle = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
 
         if (!body || !themeToggle || !themeIcon) {
-          console.error('Theme toggle elements not found');
+          console.error('Theme toggle elements not found', { body: !!body, themeToggle: !!themeToggle, themeIcon: !!themeIcon });
           return;
         }
 
@@ -494,13 +494,16 @@
         }
 
         // Add click event listener
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', function() {
           body.classList.toggle('light');
           const isLight = body.classList.contains('light');
           localStorage.setItem('theme', isLight ? 'light' : 'dark');
           updateThemeIcon(isLight ? 'light' : 'dark');
         });
-      });
+
+        // Verify event listener was attached
+        console.log('Theme toggle initialized successfully');
+      })();
 
       // Year
       document.getElementById("year").textContent = new Date().getFullYear().toString();
