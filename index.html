@@ -49,9 +49,98 @@
       html {
         scroll-behavior: smooth;
       }
+
+      /* Light theme styles */
+      body.light {
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+
+      body.light .bg-slate-900 {
+        background-color: #ffffff;
+      }
+
+      body.light .bg-slate-800 {
+        background-color: #f1f5f9;
+      }
+
+      body.light .text-slate-50 {
+        color: #0f172a;
+      }
+
+      body.light .text-slate-200 {
+        color: #1e293b;
+      }
+
+      body.light .text-slate-300 {
+        color: #475569;
+      }
+
+      body.light .text-slate-400 {
+        color: #64748b;
+      }
+
+      body.light .border-slate-800 {
+        border-color: #e2e8f0;
+      }
+
+      body.light .border-slate-700 {
+        border-color: #cbd5e1;
+      }
+
+      body.light .bg-slate-900\/80 {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      body.light .bg-slate-800\/80 {
+        background-color: rgba(241, 245, 249, 0.8);
+      }
+
+      body.light .bg-slate-800\/60 {
+        background-color: rgba(241, 245, 249, 0.6);
+      }
+
+      body.light .bg-slate-700 {
+        background-color: #e2e8f0;
+      }
+
+      body.light .bg-slate-600\/50 {
+        background-color: rgba(203, 213, 225, 0.5);
+      }
+
+      body.light .hover\:bg-slate-700:hover {
+        background-color: #e2e8f0;
+      }
+
+      body.light .hover\:bg-slate-800\/60:hover {
+        background-color: rgba(241, 245, 249, 0.6);
+      }
+
+      body.light .from-blue-900 {
+        --tw-gradient-from: #1e40af;
+        --tw-gradient-to: rgba(30, 64, 175, 0);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+      }
+
+      body.light .via-slate-900 {
+        --tw-gradient-to: rgba(248, 250, 252, 0);
+        --tw-gradient-stops: var(--tw-gradient-from), #f8fafc, var(--tw-gradient-to);
+      }
+
+      body.light .to-slate-950 {
+        --tw-gradient-to: #f1f5f9;
+      }
+
+      body.light .to-slate-900 {
+        --tw-gradient-to: #ffffff;
+      }
+
+      body.light .via-slate-800 {
+        --tw-gradient-stops: var(--tw-gradient-from), #f1f5f9, var(--tw-gradient-to);
+      }
     </style>
   </head>
-  <body class="h-full bg-slate-900 text-slate-50 antialiased">
+  <body class="h-full bg-slate-900 text-slate-50 antialiased" id="body">
     <div class="min-h-screen flex flex-col">
       <!-- NAVBAR -->
       <header class="relative z-20 border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0">
@@ -71,10 +160,21 @@
               </div>
             </div>
           </a>
-          <nav class="hidden gap-6 text-xs font-medium text-slate-300 sm:flex">
-            <a href="#home" class="hover:text-ermitsGold transition-colors">Home</a>
-            <a href="#contact" class="hover:text-ermitsGold transition-colors">Contact</a>
-          </nav>
+          <div class="flex items-center gap-4">
+            <nav class="hidden gap-6 text-xs font-medium text-slate-300 sm:flex">
+              <a href="#home" class="hover:text-ermitsGold transition-colors">Home</a>
+              <a href="#contact" class="hover:text-ermitsGold transition-colors">Contact</a>
+            </nav>
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-ermitsGold transition-colors"
+              aria-label="Toggle theme"
+            >
+              <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -360,6 +460,33 @@
     </div>
 
     <script>
+      // Theme Toggle
+      const body = document.getElementById('body');
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+
+      // Get saved theme or default to dark
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      if (currentTheme === 'light') {
+        body.classList.add('light');
+        updateThemeIcon('light');
+      }
+
+      themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light');
+        const isLight = body.classList.contains('light');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        updateThemeIcon(isLight ? 'light' : 'dark');
+      });
+
+      function updateThemeIcon(theme) {
+        if (theme === 'light') {
+          themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+        } else {
+          themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+        }
+      }
+
       // Year
       document.getElementById("year").textContent = new Date().getFullYear().toString();
 
