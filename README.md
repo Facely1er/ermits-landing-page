@@ -31,7 +31,45 @@ Enterprise Risk Management & Information Technology Solutions - Landing Page
 
 ## 🚀 Deployment on Vercel
 
-### Option 1: Deploy via Vercel CLI
+### Step 1: Create GitHub Repository
+
+1. Go to [GitHub](https://github.com/new)
+2. Create a new repository (e.g., `ermits-landing-page`)
+3. **Don't** initialize with README, .gitignore, or license (we already have these)
+4. Copy the repository URL
+
+### Step 2: Push to GitHub
+
+**Option A: Using the setup script (Windows PowerShell)**
+```powershell
+.\setup-github.ps1
+```
+
+**Option B: Using the setup script (Mac/Linux)**
+```bash
+chmod +x setup-github.sh
+./setup-github.sh
+```
+
+**Option C: Manual commands**
+```bash
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+git branch -M main
+git push -u origin main
+```
+
+### Step 3: Deploy to Vercel
+
+1. Go to [Vercel](https://vercel.com)
+2. Sign in with your GitHub account
+3. Click **"Add New Project"**
+4. Import your GitHub repository
+5. Vercel will auto-detect it's a static site
+6. Click **"Deploy"**
+
+That's it! Your site will be live in seconds.
+
+### Alternative: Deploy via Vercel CLI
 
 1. Install Vercel CLI:
    ```bash
@@ -44,28 +82,6 @@ Enterprise Risk Management & Information Technology Solutions - Landing Page
    ```
 
 3. Follow the prompts to link your project
-
-### Option 2: Deploy via GitHub
-
-1. Push this repository to GitHub:
-   ```bash
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin <your-github-repo-url>
-   git push -u origin main
-   ```
-
-2. Go to [Vercel](https://vercel.com)
-3. Click "New Project"
-4. Import your GitHub repository
-5. Vercel will auto-detect it's a static site
-6. Click "Deploy"
-
-### Option 3: Deploy via Vercel Dashboard
-
-1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-2. Click "Add New Project"
-3. Drag and drop the project folder or connect via Git
 
 ## ⚙️ Configuration
 
