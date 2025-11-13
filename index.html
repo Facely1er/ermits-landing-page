@@ -473,7 +473,6 @@
         const themeIcon = document.getElementById('theme-icon');
 
         if (!body || !themeToggle || !themeIcon) {
-          console.error('Theme toggle elements not found', { body: !!body, themeToggle: !!themeToggle, themeIcon: !!themeIcon });
           return;
         }
 
@@ -500,9 +499,6 @@
           localStorage.setItem('theme', isLight ? 'light' : 'dark');
           updateThemeIcon(isLight ? 'light' : 'dark');
         });
-
-        // Verify event listener was attached
-        console.log('Theme toggle initialized successfully');
       })();
 
       // Year
